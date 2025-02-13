@@ -1,6 +1,6 @@
 ---
 title: "Climate Change Module"
-author: 'Add name'
+author: 'Jayden Cosby'
 format:
   html:
     embed-resources: true
@@ -44,6 +44,7 @@ ggplot(co2, aes(x = decimal_date, y = monthly_average)) +
 Describe the overall trend in the CO2 data.
 
 **Answer 1:**
+The overall trend for the CO2 data is a linear progression with small declining influxes every year.
 
 **Question 2:**
 
