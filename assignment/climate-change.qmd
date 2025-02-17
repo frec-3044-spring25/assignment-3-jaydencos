@@ -51,7 +51,14 @@ The overall trend for the CO2 data is a linear progression with small declining 
 How does CO2 vary within a year?  What month is it at max?  Min?  What might explain this sub-annual pattern? (you will need to write code and make a plot to answer this question)
 
 **Answer 2:**
+Within a year, CO2 increases and decreases around the same time. The month with the max CO2 is typically May and the min month is September. Something that may explain this sub-annual pattern could be the use of fossil fuels for heating in the colder months. During the summer months the CO2 concentrations drop due to the lessening use of heating, but during the colder months, heating systems turn back on and the CO2 concentrations increase.
 
+```{r}
+co2 |> 
+  group_by(month) |> 
+  summarize(total_monthly_average = mean(monthly_average, na.rm = TRUE)) |> 
+  ggplot(aes(month, total_monthly_average)) + geom_line()
+```
 
 
 ## Global Temperature Data
@@ -65,14 +72,16 @@ Data from: <https://climate.nasa.gov/vital-signs/global-temperature/>
 **Question 3:**
 
 Describe the data set to the best of your ability, given the documentation provided. 
-
 - Where is the data from?
 - Describe the class of each column and what units it is measured in. 
 - What is the difference between "global temperature" and "global temperature anomaly"? 
 
 **Answer 3:**
+This data is from NASA's Goddard Institute for Space Studies.
 
+The Year column is a integer and its measured in years. The No-Smoothing column is numeric and its measured in units of Celcius.The column Lowess(5) is numeric and it is measured in Celcus.
 
+The difference between global temperature and global temperature anomly is that global temperature just shows the average temperature around the globe where global temperature anomaly shows how much warmer than average was the most recent year was.
 **Question 4:**
 
 Construct the necessary R code to import and prepare for plotting the following data set: <https://data.giss.nasa.gov/gistemp/graphs/graph_data/Global_Mean_Estimates_based_on_Land_and_Ocean_Data/graph.txt>
@@ -80,7 +89,11 @@ Construct the necessary R code to import and prepare for plotting the following 
 You'll need to determine the file's delimiter and any comments or skips. You will also need to be sure that you have column names. You will not directly use the code above to read the CO2 data, but that code provides helpful tips for reading the data.
 
 **Answer 4:**
+```{r}
+file_url <- "https://data.giss.nasa.gov/gistemp/graphs/graph_data/Global_Mean_Estimates_based_on_Land_and_Ocean_Data/graph.txt"
 
+q3 <- read_table(file_url, skip = 5, col_names = c("Year", "No_Smoothing", "Lowess"))
+```
 **Question 5:**
 
 Plot the trend in global mean temperatures over time.  Describe what you see in the plot and how you interpret the patterns you observe.
