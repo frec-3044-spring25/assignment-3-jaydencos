@@ -92,13 +92,18 @@ You'll need to determine the file's delimiter and any comments or skips. You wil
 ```{r}
 file_url <- "https://data.giss.nasa.gov/gistemp/graphs/graph_data/Global_Mean_Estimates_based_on_Land_and_Ocean_Data/graph.txt"
 
-q3 <- read_table(file_url, skip = 5, col_names = c("Year", "No_Smoothing", "Lowess"))
+q3 <- read_table(file_url, skip = 5, col_names = c("Year", "Mean_Average", "Lowess"))
 ```
 **Question 5:**
 
 Plot the trend in global mean temperatures over time.  Describe what you see in the plot and how you interpret the patterns you observe.
-
 **Answer 5:**
+
+In the plot, the global mean temperature remained relatively the same until an steady increase started from 1970 - 2024. I believe the influx of human activities like fossil fuel use caused the continuing spike since 1970 causing this global temperature to rise due to climate change and global warming.
+```{r}
+q3 |> 
+  ggplot(aes(Year, Mean_Average)) + geom_line() + geom_point(color = "red")
+```
 
 ## Evaluating the evidence for a "Pause" in warming?
 
@@ -111,6 +116,7 @@ You will use rolling averages to help you explore the evidence for a pause. Sinc
 Use a search engine (e.g., Google) or a chat LLM to find out how to calculate a rolling average in R. What search term or chat LLM prompt did you use?  What website or answer from the chat LLM did you end up using?  How much did you need to modify the code from the website or chat LLM to answer the question successfully?
 
 **Answer 6:**
+I used the ChatGPT and the prompt used was "How do I calculate rolling average in R". From the chat LLM I used library(zoo) and the rollmean() function. From the chat LLM I had to modify the answer by taking out examples that it provided for using the code.
 
 **Question 7:**
 
@@ -118,7 +124,10 @@ Use a search engine (e.g., Google) or a chat LLM to find out how to calculate a 
 - Create a data frame from the annual temperature anomaly data (from Question 4) with three new columns: 5-year running averages, 10-year running averages, and 20-year running averages.
 
 **Answer 7:**
+```{r}
 
+
+```
 **Question 8:**
 
 Plot the different averages on the *same plot* and describe what differences you see and why.  
