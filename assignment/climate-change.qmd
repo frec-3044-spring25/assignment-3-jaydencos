@@ -126,8 +126,12 @@ I used the ChatGPT and the prompt used was "How do I calculate rolling average i
 **Answer 7:**
 The annual average shows just one year of data whereas the 5-year average shows an average value over fives years and smooths out the data to take away short term variation and to better identify patterns
 ```{r}
+install.packages("zoo")
+library(zoo)
 q3 |> 
-  mutate('5-year running average' = mean(Mean_Average))
+  mutate("5-year running average" = rollmean(Mean_Average, k = 5, fill = NA)) |> 
+  mutate("10-year running average" = rollmean(Mean_Average, k = 10, fill = NA)) |> 
+  mutate("20-year running average" = rollmean(Mean_Average, k = 20, fill = NA))
 ```
 **Question 8:**
 
@@ -180,10 +184,11 @@ Your answer to Question 10 is going to be a mix of code chunks and text that you
 - Describe your conclusions to the question "How do recent atmospheric CO2 levels compare to historical levels?" using your plot as supporting evidence.   
 
 **Answer 10:**
-
+The data set shows the historical CO2 record from the Vostok Ice Core. The columns are Depth (m), Age of Ice (Year, BP), Mean age of the air (Year BP), and CO2 Concentration (ppmv). The numbers come from research from the Laboratoire de Glaciologie et de Geophysique de l'Environnement and Arctic and Antarctic Research Institute. The temporal resolution of this data is January 2003. 
 ```{r}
-
-
+q10 <- read_csv("vostok.icecore.co2")
+q10 <- q10 |> 
+  mutate("Depth (m)" = 149.1)
 ```
 
 # Render and committing
