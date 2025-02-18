@@ -124,9 +124,15 @@ I used the ChatGPT and the prompt used was "How do I calculate rolling average i
 - Create a data frame from the annual temperature anomaly data (from Question 4) with three new columns: 5-year running averages, 10-year running averages, and 20-year running averages.
 
 **Answer 7:**
+The annual average shows just one year of data whereas the 5-year average shows an average value over fives years and smooths out the data to take away short term variation and to better identify patterns
 ```{r}
+install.packages("slider")
+library(slider)
 
-
+q3 |> 
+  mutate('5-year running average' = slide_mean(Mean_Average, before = 4, complete = TRUE),
+    '10-year running average' = slide_mean(Mean_Average, before = 9, complete = TRUE),
+    '20-year running average' = slide_mean(Mean_Average, before = 19, complete = TRUE))
 ```
 **Question 8:**
 
