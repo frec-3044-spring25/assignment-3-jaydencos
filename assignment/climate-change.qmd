@@ -126,13 +126,8 @@ I used the ChatGPT and the prompt used was "How do I calculate rolling average i
 **Answer 7:**
 The annual average shows just one year of data whereas the 5-year average shows an average value over fives years and smooths out the data to take away short term variation and to better identify patterns
 ```{r}
-install.packages("slider")
-library(slider)
-
 q3 |> 
-  mutate('5-year running average' = slide_mean(Mean_Average, before = 4, complete = TRUE),
-    '10-year running average' = slide_mean(Mean_Average, before = 9, complete = TRUE),
-    '20-year running average' = slide_mean(Mean_Average, before = 19, complete = TRUE))
+  mutate('5-year running average' = mean(Mean_Average))
 ```
 **Question 8:**
 
