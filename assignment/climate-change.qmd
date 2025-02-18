@@ -128,7 +128,7 @@ The annual average shows just one year of data whereas the 5-year average shows 
 ```{r}
 install.packages("zoo")
 library(zoo)
-q3 |> 
+q3 <- q3 |> 
   mutate("5-year running average" = rollmean(Mean_Average, k = 5, fill = NA)) |> 
   mutate("10-year running average" = rollmean(Mean_Average, k = 10, fill = NA)) |> 
   mutate("20-year running average" = rollmean(Mean_Average, k = 20, fill = NA))
@@ -138,7 +138,13 @@ q3 |>
 Plot the different averages on the *same plot* and describe what differences you see and why.  
 
 **Answer 8:**
-
+After comparing the differing year values, I can see that as the range of years extends the rate at which the value of the CO2 concentration changes. This could be caused because of a larging range of data taking out the possiblilties of pauses in the data.
+```{r}
+q3_long <- q3 |> 
+  pivot_longer(cols = c(`5-year running average`, `10-year running average`, `20-year running average`)) 
+  
+ggplot(q3_long, aes(Year, value, color = name)) + geom_line()
+```
 **Question 9:**
 
 By examining the data here, what evidence do you find or not find for such a pause? 
