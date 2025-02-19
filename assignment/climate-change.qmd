@@ -126,7 +126,7 @@ I used the ChatGPT and the prompt used was "How do I calculate rolling average i
 **Answer 7:**
 The annual average shows just one year of data whereas the 5-year average shows an average value over fives years and smooths out the data to take away short term variation and to better identify patterns
 ```{r}
-install.packages("zoo")
+install.packages("zoo", repos = "https://cloud.r-project.org/")
 library(zoo)
 q3 <- q3 |> 
   mutate("5-year running average" = rollmean(Mean_Average, k = 5, fill = NA)) |> 
