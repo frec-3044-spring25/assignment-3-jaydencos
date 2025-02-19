@@ -138,18 +138,19 @@ q3 <- q3 |>
 Plot the different averages on the *same plot* and describe what differences you see and why.  
 
 **Answer 8:**
-After comparing the differing year values, I can see that as the range of years extends the rate at which the value of the CO2 concentration changes. This could be caused because of a larging range of data taking out the possiblilties of pauses in the data.
+After comparing the differing year values, I can see that as the range of years extends the rate at which the value of the CO2 concentration changes. This could be caused because of a large range of data taking out the possiblilties of pauses in the data and extreme dips from certain months and years.
 ```{r}
 q3_long <- q3 |> 
   pivot_longer(cols = c(`5-year running average`, `10-year running average`, `20-year running average`)) 
   
-ggplot(q3_long, aes(Year, value, color = name)) + geom_line()
+ggplot(q3_long, aes(Year, value, color = name)) + geom_line() + labs(title = "5, 10, and 20-year running Average", x = "Year", y = "Mean Average")
 ```
 **Question 9:**
 
 By examining the data here, what evidence do you find or not find for such a pause? 
 
 **Answer 9:**
+When looking at the above graph, examining the 5 and 10-year averages, you can still see the heavy increases in the data shown. When looking at the 20-year running averages, the evidence of pauses become clearer as the there are moments when the rate of the increase becomes stagnant, then years later it resumes and continues to increase.
 
 ## Longer term trends in CO2 Records
 
@@ -192,9 +193,20 @@ Your answer to Question 10 is going to be a mix of code chunks and text that you
 **Answer 10:**
 The data set shows the historical CO2 record from the Vostok Ice Core. The columns are Depth (m), Age of Ice (Year, BP), Mean age of the air (Year BP), and CO2 Concentration (ppmv). The numbers come from research from the Laboratoire de Glaciologie et de Geophysique de l'Environnement and Arctic and Antarctic Research Institute. The temporal resolution of this data is January 2003. 
 ```{r}
-q10 <- read_csv("vostok.icecore.co2")
+q10 <- read_table("vostok.icecore.co2", col_names = c("Depth (m)", "Age of the Ice (year BP)", "Mean age of the air (year BP)", "CO2 concentration (ppmv)"), col_types = cols(.default = "c"), skip = 20)
+
 q10 <- q10 |> 
-  mutate("Depth (m)" = 149.1)
+  mutate(`Age of the Ice (year BP)` = as.numeric(`Age of the Ice (year BP)`), 
+      `Mean age of the air (year BP)` = as.numeric(`Mean age of the air (year BP)`),
+      `CO2 concentration (ppmv)` = as.numeric(`CO2 concentration (ppmv)`)) |> 
+      arrange(`Age of the Ice (year BP)`)
+
+q10 |> 
+  ggplot(aes(`Age of the Ice (year BP)`, `CO2 concentration (ppmv)`)) + geom_line(color = "red") + labs(title = "Vostok Ice Core Data", x = "Age of the Ice (year BP)", y = "CO2 Concentration (ppmv)") + theme_gray()
+
+q10_c02_binded <- q10 |> 
+  bind_rows(co2)
+
 ```
 
 # Render and committing
